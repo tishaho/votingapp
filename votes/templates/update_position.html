@@ -4,12 +4,12 @@
 <form action="{% url 'votes:update_position' form.instance.id %}" method="POST">
     {% csrf_token %}
     <div class="row">
-        <div class="col m4">
+        <div class="col m5">
             {{ form }}
         </div>
     </div>
     <div class="row">
-        <div class="col m4">
+        <div class="col m5">
             <input class="btn" type="submit" value="Update" />
         </div>
     </div>
