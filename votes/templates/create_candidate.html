@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Create Candidate{% endblock %}
+{% block body %}
+<form action="{% url 'votes:create_candidate' %}" method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col m4">
+            {{ form }}
+
+            Position: 
+                <select name="position_id">
+                {% for position in positions %}
+                    <option value="{{ position.id }}">{{ position.name }}</option>
+                {% endfor %}
+                </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m4">
+            <input class="btn" type="submit" value="Add Candidate" />
+        </div>
+    </div>
+</form>
+{% endblock %}

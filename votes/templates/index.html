@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Index{% endblock %}
+{% block body %} 
+  <style>
+   body { 
+      background: #5b9aa0 !important; 
+    } 
+
+   .nav-link {
+      padding-right: .5rem !important;
+      padding-left: .5rem !important;
+    }
+  </style>  
+
+    {% if request.user.is_authenticated %}
+        <div class="row center">
+            <a href="{% url 'votes:candidates_list' %}" class="btn">Candidates</a>
+            <a href="{% url 'votes:detail_position' %}" class="btn">Positions</a>
+            <a href="{% url 'votes:logout' %}" class="btn">Logout</a>
+        </div>
+    {% else %}
+        <nav class="navbar navbar-inverse navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Voters Club</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="nav-link" href="{% url 'votes:login' %}" class="btn">Login</a></li>
+              &nbsp;&nbsp;&nbsp;
+              <li><a class="nav-link" href="{% url 'votes:registration' %}" class="btn">Register</a></li>
+            </ul>
+          </div>
+        </nav>
+    {% endif %}
+    {% block inbtn %}{% endblock %}
+{% endblock %}
