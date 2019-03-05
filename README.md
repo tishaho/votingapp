@@ -1,5 +1,6 @@
 # votingapp
-A project created that includes login, user registration and enables users to vote candidates with party lists. 
+A project created that includes login, user registration and enables users to vote candidates within partylists. 
+Can create, update partylist, position and candidate. 
 
 
 Group Members:
