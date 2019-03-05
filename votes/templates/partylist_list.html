@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Partylists{% endblock %}
+{% block body %} 
+    <style>
+       .nav-link {
+          padding-right: .5rem !important;
+          padding-left: .5rem !important;
+        }
+        
+      </style> 
+
+    {% if request.user.is_authenticated %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <a class="navbar-brand" href="#">Voters Club</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'votes:partylist_list' %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'votes:candidates_list' %}">Candidates</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'votes:detail_position' %}">Positions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'votes:vote_page' %}">Vote</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+              <a class="nav-link" href="{% url 'votes:logout' %}">Logout</a>
+            </form>
+          </div>
+        </nav>
+
+        <div class="row" style="float:right; margin-right: 50px; margin-top:15px;">
+            <a class="btn btn-success" style="" href="{% url 'votes:create_partylist' %}" role="button">Add New Partylist</a>
+        </div>
+        <br><br><br>
+
+        <div class="row" style="float:none; margin:0; ">
+        {% for partylist in partylists %}
+            <div class="card text-center text-white bg-primary mb-3" style="width: 30%; margin-left:35px; margin-top: 35px">
+            <div class="card-header">
+                <a href="{% url 'votes:create_candidate' %}" class="card-link float-left">Add Candidate</a>
+                <a href="{% url 'votes:update_partylist' partylist.id %}" class="card-link float-right">Update Partylist</a>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">{{ partylist.name }} </h2>
+                <p class="card-text text-wrap">{{ partylist.description }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-success">
+                <a href="{% url 'votes:detail_partylist' partylist.id %}" class="card-link float-center">See Details</a>
+            </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+    {% block inbtn %}{% endblock %}
+{% endblock %}
+

@@ -1,20 +1,49 @@
 {% extends 'base.html' %}
-
 {% block title %}Positions{% endblock %}
 {% block body %}
-<a href="{% url 'votes:create_position' %}" class="btn">Add new Position</a>
-          <div class="row">
-        {% for position in positions %}
-            <div class="col m3 center">
-              <div class="card blue-grey darken-1 hoverable">
-                <div class="card-content white-text">
-                  <span class="card-title truncate">Position: {{ position.name }} <br /> Description: {{ position.description }}</span>
-                </div>
-                <div class="card-action">
-                    <a href="{% url 'votes:update_position' position.id %}">Update</a>
-               </div>
-            </div>
-          </div>
-        {% endfor %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Voters Club</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'votes:partylist_list' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'votes:candidates_list' %}">Candidates</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'votes:detail_position' %}">Positions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'votes:vote_page' %}">Vote</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+          <a class="nav-link" href="{% url 'votes:logout' %}">Logout</a>
+        </form>
+      </div>
+    </nav>
+
+        <div class="row" style="float:right; margin-right: 50px; margin-top:15px;">
+          <a class="btn btn-success" style="" href="{% url 'votes:create_position' %}" role="button">Add New Position</a>
         </div>
+        <br><br><br>
+
+        <div class="row" style="float:none; margin:0; ">
+                {% for position in positions %}
+                  <div class="card text-white bg-primary mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
+                  <div class="card-header" style="font-size: x-large;">{{ position.name }}</div>
+                  <div class="card-body">
+                    <h5 class="card-title">Description: {{ position.description }}</h5>                  </div>
+                  <div class="card-footer bg-transparent border-success">
+                      <a href="{% url 'votes:update_position' position.id %}" class="card-link float-center">Update</a>
+                  </div>
+                </div>
+            {% endfor %} 
+          </div>
 {% endblock %}

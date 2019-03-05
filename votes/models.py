@@ -1,6 +1,15 @@
 from django.db import models
 
 # Create your models here.
+class Partylist(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    is_active = models.BooleanField(default=True)
+
+
+    def __str__(self):
+        return self.name
+
 class Position(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
@@ -14,8 +23,13 @@ class Candidate(models.Model):
     position = models.ForeignKey(Position, on_delete=models.CASCADE,
                                     related_name='candidates',
                                     blank=True, null=True)
+    partylist = models.ForeignKey(Partylist, on_delete=models.CASCADE,
+                                    related_name='partylist',
+                                    blank=True, null=True)
     birthdate = models.DateField()
     platform = models.TextField()
+    is_active = models.BooleanField(default=True)
+    image = models.ImageField(blank=True, null=True, upload_to="images/")
 
     def __str__(self):
         return self.firstname + ' ' + self.lastname

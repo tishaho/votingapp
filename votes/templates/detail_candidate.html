@@ -1,23 +1,79 @@
 {% extends 'base.html' %}
+{% block title %}Candidates{% endblock %}
+{% block body %}  
+    {% if request.user.is_authenticated %}
 
-{% block title %}{{ candidate.firstname }} {{ candidate.lastname }}{% endblock %}
-{% block body %}
-    <div class="row">
-        <div class="col m8">
-            <h4>{{ candidate.firstname }} {{ candidate.lastname }}</h4>
-            <span>votes: {{ candidate.votes.all.count }}</span>
+    {% if request.user.is_authenticated %}
+
+    <style>
+/*    body{
+      overflow: hidden;
+    }*/
+
+    </style>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Voters Club</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'votes:partylist_list' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'votes:candidates_list' %}">Candidates</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'votes:detail_position' %}">Positions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'votes:vote_page' %}">Vote</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+          <a class="nav-link" href="{% url 'votes:logout' %}">Logout</a>
+        </form>
+      </div>
+    </nav>
+
+    {% else %}
+        <nav class="navbar navbar-inverse navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Voters Club</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="nav-link" href="{% url 'votes:login' %}" class="btn">Login</a></li>
+              &nbsp;&nbsp;&nbsp;
+              <li><a class="nav-link" href="{% url 'votes:registration' %}" class="btn">Register</a></li>
+            </ul>
+          </div>
+        </nav>
+    {% endif %}
+
+
+        <div class="jumbotron"> 
+          <h1 class="display-4">{{ candidate.firstname }} {{ candidate.lastname }}</h1>
+            {% if candidate.image %} 
+                 <img src="/votes{{ candidate.image.url }}" class="card-img-top" style=" width:200px; height: 200px;">
+            {% else %}    
+                <img src="/votes/media/images/vote_wallpaper.jpg" class="card-img-top" style=" width:200px; height: 200px;">
+            {% endif %} 
+          <hr class="my-4"><br>
+            <h5 class="display-5">Votes: {{ candidate.votes.all.count }}</h5> <br><br><br>
+            <h5>Platform: <br></h5>
+            <blockquote class="blockquote">
+            <p class="mb-0">"{{ candidate.platform }}"</p>
+            <footer class="blockquote-footer">{{ candidate.firstname }} {{ candidate.lastname }} ({{ candidate.partylist }}), running for {{ candidate.position }} </footer>
+          </blockquote> <br><br><br>
+            <a class="btn btn-primary btn-lg" href="{% url 'votes:vote' candidate.id %}" role="button">Vote Candidate</a> <a class="btn btn-primary btn-lg" href="{% url 'votes:update_candidate' candidate.id %}" role="button">Update Candidate</a>
+          </p>
         </div>
-    </div>
-    <div class="row">
-        <div class="col m8">
-            <h5>Platform:</h5>
-            <p>{{ candidate.platform }}</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col m6">
-            <a href="{% url 'votes:vote' candidate.id %}" class="btn">Vote Candidate</a>
-            <a href="{% url 'votes:update_candidate' candidate.id %}" class="btn">Update Candidate</a>
-        </div>
-    </div>
+    {% endif %}
+    {% block inbtn %}{% endblock %}
 {% endblock %}
+

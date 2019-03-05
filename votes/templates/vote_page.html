@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Vote{% endblock %}
+{% block body %}  
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <a class="navbar-brand" href="#">Voters Club</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'votes:partylist_list' %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'votes:candidates_list' %}">Candidates</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'votes:detail_position' %}">Positions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'votes:vote_page' %}">Vote</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+              <a class="nav-link" href="{% url 'votes:logout' %}">Logout</a>
+            </form>
+          </div>
+        </nav>
+
+        {% if request.user.is_authenticated %}
+        <br><br><br>
+        <h4 style="margin-left:30px;"> Choose a Position: </h4>
+        <div class="row" style="float:none; margin:0; ">
+                {% for position in positions %}
+                  <div class="card text-white bg-primary mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
+                  <div class="card-header" style="font-size: x-large;">{{ position.name }}</div>
+                  <div class="card-footer bg-transparent border-success">
+                      <a href="{% url 'votes:vote_candidates_pos' position.id %}">Vote Candidates</a>
+                  </div>
+                </div>
+            {% endfor %} 
+        </div>
+
+      <br><br><br>
+      <hr>
+      
+      <h4 style="margin-left:30px;"> Choose a Partylist: </h4>
+        <div class="row" style="float:none; margin:0; ">
+                {% for partylist in partylists %}
+                  <div class="card text-white bg-primary mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
+                  <div class="card-header" style="font-size: x-large;">{{ partylist.name }}</div>
+                  <div class="card-footer bg-transparent border-success">
+                      <a href="{% url 'votes:detail_partylist' partylist.id %}">Vote Candidates</a>
+                  </div>
+                </div>
+            {% endfor %} 
+        </div>
+      <br><br><br>
+    {% endif %}
+{% endblock %}

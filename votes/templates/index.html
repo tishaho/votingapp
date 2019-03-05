@@ -1,36 +1,236 @@
 {% extends 'base.html' %}
 {% block title %}Index{% endblock %}
 {% block body %} 
+
+{% load staticfiles %}
   <style>
    body { 
-      background: #5b9aa0 !important; 
+      
     } 
 
    .nav-link {
       padding-right: .5rem !important;
       padding-left: .5rem !important;
     }
+
   </style>  
 
     {% if request.user.is_authenticated %}
-        <div class="row center">
-            <a href="{% url 'votes:candidates_list' %}" class="btn">Candidates</a>
-            <a href="{% url 'votes:detail_position' %}" class="btn">Positions</a>
-            <a href="{% url 'votes:logout' %}" class="btn">Logout</a>
-        </div>
-    {% else %}
-        <nav class="navbar navbar-inverse navbar-expand-lg navbar-dark bg-dark">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="#">Voters Club</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="{% url 'votes:index' %}">Voters Club</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'votes:partylist_list' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'votes:candidates_list' %}">Candidates</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'votes:detail_position' %}">Positions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'votes:vote_page' %}">Vote</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+          <a class="nav-link" href="{% url 'votes:logout' %}">Logout</a>
+        </form>
+      </div>
+    </nav>
+    <div class="row" style="float:right; margin-right: 50px; margin-top:15px;">
+      <a class="btn btn-success" style="" href="{% url 'votes:create_partylist' %}" role="button">Add New Partylist</a>
+    </div>
+    <br><br><br>
+    <div class="row" style="float:none; margin:0; ">
+        {% for partylist in partylists %}
+            <div class="card text-center text-white bg-primary mb-3" style="width: 30%; margin-left:35px; margin-top: 35px">
+            <div class="card-header">
+                <a href="{% url 'votes:create_candidate' %}" class="card-link float-left">Add Candidate</a>
+                <a href="{% url 'votes:update_partylist' partylist.id %}" class="card-link float-right">Update Partylist</a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a class="nav-link" href="{% url 'votes:login' %}" class="btn">Login</a></li>
-              &nbsp;&nbsp;&nbsp;
-              <li><a class="nav-link" href="{% url 'votes:registration' %}" class="btn">Register</a></li>
-            </ul>
+            <div class="card-body">
+                <h2 class="card-title">{{ partylist.name }} </h2>
+                <p class="card-text text-wrap">{{ partylist.description }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-success">
+                <a href="{% url 'votes:detail_partylist' partylist.id %}" class="card-link float-center">See Details</a>
+            </div>
+            </div>
+        {% endfor %}
+        </div>
+
+    {% else %}
+        
+        <div class="page">
+          <div class="container">
+            <div class="left">
+              <div class="login">Login   <img src="{% static 'images/login.png' %}" width="50"></div>
+              <div class="eula"><a href="{% url 'votes:registration' %}"><input id="submit" value="Register"></a>
+               </div>
+            </div>
+            <div class="right">
+              <div class="form">
+                <form action="{% url 'votes:login' %}" method="POST">
+                {% csrf_token %}
+                <label for="username">Username:</label>
+                <input type="text" name="username" />
+                <label for="password">Password:</label>
+                <input type="password" name="password" />
+                <input type="submit" id="submit" value="Submit">
+                </form>
+              </div>
+            </div>
           </div>
-        </nav>
+        </div>
+
+        <style>
+        @import url('https://rsms.me/inter/inter-ui.css');
+        ::selection {
+          background: #2D2F36;
+        }
+        ::-webkit-selection {
+          background: #2D2F36;
+        }
+        ::-moz-selection {
+          background: #2D2F36;
+        }
+        body {
+          background: white;
+          font-family: 'Inter UI', sans-serif;
+          margin: 0;
+          padding: 20px;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+        .page {
+          background: #5b9aa0;
+          display: flex;
+          flex-direction: column;
+          height: calc(100% - 40px);
+          position: absolute;
+          place-content: center;
+          width: calc(100% - 40px);
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+        @media (max-width: 767px) {
+          .page {
+            height: auto;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+          }
+        }
+        .container {
+          display: flex;
+          height: 320px;
+          margin: 0 auto;
+          width: 640px;
+        }
+        @media (max-width: 767px) {
+          .container {
+            flex-direction: column;
+            height: 630px;
+            width: 320px;
+          }
+        }
+        .left {
+          background: white;
+          height: calc(100% - 40px);
+          top: 20px;
+          position: relative;
+          width: 50%;
+        }
+        @media (max-width: 767px) {
+          .left {
+            height: 100%;
+            left: 20px;
+            width: calc(100% - 40px);
+            max-height: 270px;
+          }
+        }
+        .login {
+          font-size: 50px;
+          font-weight: 900;
+          margin: 50px 40px 40px;
+        }
+        .eula {
+          color: #999;
+          font-size: 14px;
+          line-height: 1.5;
+          margin: 40px;
+        }
+        .right {
+          background: #474A59;
+          box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+          color: #F1F1F2;
+          position: relative;
+          width: 50%;
+        }
+        @media (max-width: 767px) {
+          .right {
+            flex-shrink: 0;
+            height: 100%;
+            width: 100%;
+            max-height: 350px;
+          }
+        }
+        svg {
+          position: absolute;
+          width: 320px;
+        }
+        path {
+          fill: none;
+          stroke: url(#linearGradient);;
+          stroke-width: 4;
+          stroke-dasharray: 240 1386;
+        }
+        .form {
+          margin: 40px;
+          position: absolute;
+        }
+        label {
+          color:  #c2c2c5;
+          display: block;
+          font-size: 14px;
+          height: 16px;
+          margin-top: 20px;
+          margin-bottom: 5px;
+        }
+        input {
+          background: transparent;
+          border: 0;
+          color: #f2f2f2;
+          font-size: 20px;
+          height: 30px;
+          line-height: 30px;
+          outline: none !important;
+          width: 100%;
+        }
+        input::-moz-focus-inner { 
+          border: 0; 
+        }
+        #submit {
+          color: #707075;
+          margin-top: 40px;
+          transition: color 300ms;
+        }
+        #submit:focus {
+          color: #f2f2f2;
+        }
+        #submit:active {
+          color: #d0d0d2;
+        }
+
+        </style>
     {% endif %}
     {% block inbtn %}{% endblock %}
 {% endblock %}

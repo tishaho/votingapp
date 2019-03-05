@@ -3,13 +3,13 @@
 {% block body %}
 
 {% load staticfiles %}
-<script src="{% static 'app.js' %}"></script>
 
 <div class="page">
   <div class="container">
     <div class="left">
-      <div class="login">Login</div>
-      <div class="eula">By logging in you agree to the ridiculously long terms that you didn't bother to read</div>
+      <div class="login">Login   <img src="{% static 'images/login.png' %}" width="50"></div>
+      <div class="eula"><a href="{% url 'votes:registration' %}"><input id="submit" value="Register"></a>
+       </div>
     </div>
     <div class="right">
       <div class="form">
@@ -42,6 +42,9 @@ body {
   font-family: 'Inter UI', sans-serif;
   margin: 0;
   padding: 20px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .page {
   background: #5b9aa0;
@@ -51,6 +54,9 @@ body {
   position: absolute;
   place-content: center;
   width: calc(100% - 40px);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 @media (max-width: 767px) {
   .page {
@@ -161,5 +167,5 @@ input::-moz-focus-inner {
 }
 
 </style>
-
+<script src="{% static 'votes/bootstrap/js/login.js' %}"></script>
 {% endblock %}

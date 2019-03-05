@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Create Candidate{% endblock %}
+{% block title %}Create Partylist{% endblock %}
 {% block body %}
-<form action="{% url 'votes:create_candidate' %}" method="POST">
+<form action="{% url 'votes:create_partylist' %}" method="POST">
     {% csrf_token %}
     <div class="row">
         <div class="col m4">
@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <div class="col m4">
-            <input class="btn" type="submit" value="Add Candidate" />
+            <input class="btn" type="submit" value="Add Partylist" />
         </div>
     </div>
 </form>
