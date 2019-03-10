@@ -34,25 +34,25 @@
         <h4 style="margin-left:30px;"> Choose a Position: </h4>
         <div class="row" style="float:none; margin:0; ">
                 {% for position in positions %}
-                  <div class="card text-white bg-primary mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
+                  <div class="card text-white bg-success mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
                   <div class="card-header" style="font-size: x-large;">{{ position.name }}</div>
-                  <div class="card-footer bg-transparent border-success">
-                      <a href="{% url 'votes:vote_candidates_pos' position.id %}">Vote Candidates</a>
+                  <div class="card-footer bg-transparent border-primary">
+                      <a class="text-primary" href="{% url 'votes:vote_candidates_pos' position.id %}">Vote Candidates</a>
                   </div>
                 </div>
             {% endfor %} 
         </div>
 
-      <br><br><br>
+      <br>
       <hr>
       
       <h4 style="margin-left:30px;"> Choose a Partylist: </h4>
         <div class="row" style="float:none; margin:0; ">
                 {% for partylist in partylists %}
-                  <div class="card text-white bg-primary mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
+                  <div class="card text-white bg-success mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
                   <div class="card-header" style="font-size: x-large;">{{ partylist.name }}</div>
-                  <div class="card-footer bg-transparent border-success">
-                      <a href="{% url 'votes:detail_partylist' partylist.id %}">Vote Candidates</a>
+                  <div class="card-footer bg-transparent border-primary">
+                      <a class="text-primary" href="{% url 'votes:detail_partylist' partylist.id %}">Vote Candidates</a>
                   </div>
                 </div>
             {% endfor %} 

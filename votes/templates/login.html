@@ -7,8 +7,13 @@
 <div class="page">
   <div class="container">
     <div class="left">
-      <div class="login">Login   <img src="{% static 'images/login.png' %}" width="50"></div>
-      <div class="eula"><a href="{% url 'votes:registration' %}"><input id="submit" value="Register"></a>
+      <div class="login">Login<img src="{% static 'images/login.png' %}" width="50"></div>
+      <div class="eula"><br><br>
+         <a href="{% url 'votes:registration' %}"><button class="btn btn-light" style="font-size: 20px; width:50%" type="submit" value="Register">Register</button></a>
+
+
+
+        <!-- <a href="{% url 'votes:registration' %}"><input id="submit" value="Register"></a> -->
        </div>
     </div>
     <div class="right">
@@ -19,7 +24,9 @@
         <input type="text" name="username" />
         <label for="password">Password:</label>
         <input type="password" name="password" />
-        <input type="submit" id="submit" value="Submit">
+        <!-- <input type="submit" id="submit" value="Submit"> -->
+        <br><br><br>
+        <button class="btn btn-success" style="margin-left:25%; font-size: 20px; width:50%" type="submit" value="Submit">Submit</button>
         </form>
       </div>
     </div>

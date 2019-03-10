@@ -4,14 +4,14 @@
     {% if request.user.is_authenticated %}
 
     <style>
-    body{
+    /*body{
       overflow: hidden;
-    }
+    }*/
 
     </style>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Voters Club</a>
+      <a class="navbar-brand" href="#">Voters Club </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -54,21 +54,26 @@
     {% endif %}
 
 
-        <div class="jumbotron">
+        <div class="jumbotron" style="position:fixed; width:100%; height:100%;">
           <h1 class="display-4">{{ partylist.name }}</h1>
           <hr class="my-4"><br>
-            <h5 class="display-5"> {{ partylist.description }} </h5> <br><br><br>
+            <h5 class="display-5"> {{ partylist.description }} </h5> <br><br><br><br>
             
+            <hr>
             <h5>Candidates: <br></h5>
-
             <div class="row">
                 {% for candidate in partylist.partylist.all %}
-                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                {% if candidate.is_active %}
+                <div class="card text-white bg-success mb-3" style="width: 20%; margin-left:20px; margin-top: 35px">
                   <div class="card-body">
                     <h4 class="card-title">{{ candidate.firstname }} {{ candidate.lastname }}</h4>
-                    <p class="card-text"><a href="{% url 'votes:detail_candidate' candidate.id %}">See Details</a></p>
+                    <p class="card-text">{{ candidate.position }}</p>
+                    <div class="card-footer bg-transparent border-primary">
+                        <a href="{% url 'votes:detail_candidate' candidate.id %}" class="card-link float-left text-primary">See Details</a>
+                    </div>
                   </div>
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
 

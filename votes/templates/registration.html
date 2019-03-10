@@ -2,13 +2,34 @@
 
 {% block title %}Registration{% endblock %}
 {% block body %}
-<div class="row">
-    <div class="col m3">
-        <form action="{% url 'votes:registration' %}" method="POST">
-            {% csrf_token %}
-            {{ form }}
-            <input class="btn" type="submit" value="Register" />
-        </form>
-    </div>
-</div>
-{% endblock %}
+<br><br><br><br><br><br><br><br>
+
+	<style>
+		body{
+			background: #5b9aa0;
+		}
+
+	</style>
+
+	<form action="{% url 'votes:registration' %}" method="POST">
+    {% csrf_token %}
+    <div class="card border-primary mb-3" style="max-width: 40rem; margin-left:30%;";">
+            <div class="card-header">Registration</div>
+            <div class="card-body">
+                <p class="card-text">
+                    <table style="margin-left:30px;">
+                        <div class="row">
+                            <div class="col m4">
+                                {{ form.as_table }}
+                            </div>
+                        </div>
+                    </table>
+                </p>
+                </div>
+            <div class="card-footer bg-transparent border-primary">
+                <button style="margin-left:10px" class="btn btn-success" type="submit" value="Register">Register</button>
+            </div>
+        </div>
+    </form>
+
+    {% endblock %}

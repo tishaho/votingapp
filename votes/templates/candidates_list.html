@@ -49,22 +49,24 @@
     {% endif %}
 
     <div class="row" style="float:right; margin-right: 50px; margin-top:15px;">
-        <a class="btn btn-success" style="" href="{% url 'votes:create_candidate' %}" role="button">Add New Candidate</a>
+        <a class="btn btn-primary" style="" href="{% url 'votes:create_candidate' %}" role="button">Add New Candidate</a>
     </div>
     <br><br><br>
 
     <div class="row" style="float:none; margin:0; ">
       {% for candidate in candidates %}
-          <div class="card text-white bg-primary mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
+        {% if candidate.is_active %}
+          <div class="card text-white bg-success mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
           <div class="card-header" style="font-size: x-large;">{{ candidate.firstname }} {{ candidate.lastname }}</div>
           <div class="card-body">
             <h5 class="card-title">Partylist: {{ candidate.partylist }}</h5>
             <h5 class="card-title">Votes: {{ candidate.votes.all.count }}</h5>
           </div>
-          <div class="card-footer bg-transparent border-success">
-              <a href="{% url 'votes:detail_candidate' candidate.id %}" class="card-link float-center">See Details</a>
+          <div class="card-footer bg-transparent border-primary">
+              <a href="{% url 'votes:detail_candidate' candidate.id %}" class="card-link float-center text-primary">See Details</a>
           </div>
         </div>
+        {% endif %}
     {% endfor %} 
     </div>
     

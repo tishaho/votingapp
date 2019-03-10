@@ -6,7 +6,7 @@
     {% if request.user.is_authenticated %}
 
     <style>
-/*    body{
+    /*body{
       overflow: hidden;
     }*/
 
@@ -56,20 +56,20 @@
     {% endif %}
 
 
-        <div class="jumbotron"> 
-          <h1 class="display-4">{{ candidate.firstname }} {{ candidate.lastname }}</h1>
+        <div class="jumbotron" style="position:fixed; width:100%; height:100%;"> 
+          <h1 class="display-5play-4">{{ candidate.firstname }} {{ candidate.lastname }}</h1>
             {% if candidate.image %} 
                  <img src="/votes{{ candidate.image.url }}" class="card-img-top" style=" width:200px; height: 200px;">
             {% else %}    
                 <img src="/votes/media/images/vote_wallpaper.jpg" class="card-img-top" style=" width:200px; height: 200px;">
             {% endif %} 
-          <hr class="my-4"><br>
-            <h5 class="display-5">Votes: {{ candidate.votes.all.count }}</h5> <br><br><br>
+          <hr class="my-4">
+            <h5 class="display-5">Votes: {{ candidate.votes.all.count }}</h5> <br>
             <h5>Platform: <br></h5>
             <blockquote class="blockquote">
             <p class="mb-0">"{{ candidate.platform }}"</p>
             <footer class="blockquote-footer">{{ candidate.firstname }} {{ candidate.lastname }} ({{ candidate.partylist }}), running for {{ candidate.position }} </footer>
-          </blockquote> <br><br><br>
+          </blockquote> <br><br>
             <a class="btn btn-primary btn-lg" href="{% url 'votes:vote' candidate.id %}" role="button">Vote Candidate</a> <a class="btn btn-primary btn-lg" href="{% url 'votes:update_candidate' candidate.id %}" role="button">Update Candidate</a>
           </p>
         </div>

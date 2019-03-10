@@ -57,7 +57,7 @@ def upd_candidate(request, candidate_id):
         form = CandidateModelForm(request.POST, request.FILES, instance=candidate)
         if form.is_valid():
             form.save()
-            return redirect('votes:detail_candidate', form.instance.id)
+            return redirect('votes:candidates_list')
         else:
             context['form'] = form
     else:
@@ -180,7 +180,7 @@ def registration(request):
             user.set_password(request.POST['password'])
             user.save()
             login(request, user)
-            return redirect('votes:index')
+            return redirect('votes:login')
         else:
             context['form'] = form
     return render(request, 'registration.html', context)

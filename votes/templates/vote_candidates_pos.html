@@ -1,28 +1,73 @@
 {% extends 'base.html' %}
-
 {% block title %}Vote by Position{% endblock %}
 {% block body %}
-          <div class="row">
-            <div class="col m8">
-                <h4>{{ position.name }}</h4>
-                <br/><br />
-                <h4> Candidates: </h4>
 
-                <div class="row">
-                  {% for candidate in position.candidates.all %}
-                      <div class="col m3 center">
-                        <div class="card blue-grey darken-1 hoverable">
-                          <div class="card-content white-text">
-                            <span class="card-title truncate">{{ candidate.firstname }} {{ candidate.lastname }}</span>
-                            <br>
-                            Partylist: 
-                            {{ candidate.partylist }}
-                          </div>
-                          <div class="card-action">
-                              <a href="{% url 'votes:detail_candidate' candidate.id %}">See Details</a>
-                         </div>
-                      </div>
+{% if request.user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <a class="navbar-brand" href="#">Voters Club</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'votes:partylist_list' %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'votes:candidates_list' %}">Candidates</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'votes:detail_position' %}">Positions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'votes:vote_page' %}">Vote</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+              <a class="nav-link" href="{% url 'votes:logout' %}">Logout</a>
+            </form>
+          </div>
+        </nav>
+
+        {% else %}
+            <nav class="navbar navbar-inverse navbar-expand-lg navbar-dark bg-dark">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">Voters Club</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a class="nav-link" href="{% url 'votes:login' %}" class="btn">Login</a></li>
+                  &nbsp;&nbsp;&nbsp;
+                  <li><a class="nav-link" href="{% url 'votes:registration' %}" class="btn">Register</a></li>
+                </ul>
+              </div>
+            </nav>
+        {% endif %}
+
+          <div class="jumbotron" style="position:fixed; width:100%; height:100%;"> 
+            <div class="row">
+              <div class="col m8">
+                  <h3>{{ position.name }}</h3>
+                  <br>
+                  <hr>
+                  <br/><br />
+                  <h4> Candidates: </h4>
+
+                  <div class="row">
+                    {% for candidate in position.candidates.all %}
+                      <div class="card text-white bg-primary mb-3" style="width: 20%; margin-left:60px; margin-top: 35px">
+                        <div class="card-header" style="font-size: x-large;">{{ candidate.firstname }} {{ candidate.lastname }}</div>
+                        <div class="card-body">
+                          <h5 class="card-title">Partylist: {{ candidate.partylist }}</h5>
+                          <h5 class="card-title">Votes: {{ candidate.votes.all.count }}</h5>
+                        </div>
+                        <div class="card-footer bg-transparent border-success">
+                            <a href="{% url 'votes:detail_candidate' candidate.id %}" class="card-link float-center text-success">See Details</a>
+                        </div>
                     </div>
-                  {% endfor %}
-                  </div>   
+                {% endfor %} 
+              </div>
+            </div>
 {% endblock %}
